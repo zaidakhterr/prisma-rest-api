@@ -1,2 +1,4 @@
 /node_modules
+
 /prisma/.env
+/prisma/Studio
