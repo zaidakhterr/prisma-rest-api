@@ -1,12 +1,9 @@
 const express = require("express");
-const { PrismaClient } = require("@prisma/client");
+const prisma = require("./client");
+const author = require("./routes/author");
 const port = 4000;
 
 const app = express();
-
-const prisma = new PrismaClient({
-  log: ["query", "info", "warn"],
-});
 
 // Middleware
 app.use(express.json());
@@ -20,6 +17,8 @@ app.get("/", async (req, res) => {
     books: allBooks,
   });
 });
+
+app.use("/", author);
 
 // Listen
 app.listen(port, () => {
