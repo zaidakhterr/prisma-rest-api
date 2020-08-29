@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://zaid:zaid1202@localhost:5432/prismaplay"
+}
+
+model Author {
+  id    Int    @default(autoincrement()) @id
+  name  String
+  email String @unique
+  books Book[]
+}
+
+model Book {
+  id       Int    @default(autoincrement()) @id
+  title    String
+  authorId Int
+  author   Author @relation(fields: [authorId], references: [id])
+}
