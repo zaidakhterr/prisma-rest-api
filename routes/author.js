@@ -65,4 +65,17 @@ router.get("/author/:id", async (req, res) => {
   }
 });
 
+// Get All Authors
+router.get("/authors", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const allAuthors = await prisma.author.findMany();
+
+    res.json(allAuthors);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
 module.exports = router;
