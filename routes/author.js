@@ -44,4 +44,25 @@ router.delete("/author", async (req, res) => {
   }
 });
 
+// Find Author by ID
+router.get("/author/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const author = await prisma.author.findOne({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!author) {
+      res.status(404).json("Author does not exist");
+    }
+
+    res.json(author);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+});
+
 module.exports = router;
