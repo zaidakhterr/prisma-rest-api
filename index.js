@@ -1,6 +1,7 @@
 const express = require("express");
 const prisma = require("./client");
 const author = require("./routes/author");
+const book = require("./routes/book");
 const port = 4000;
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/", author);
+app.use("/", book);
 
 // Listen
 app.listen(port, () => {
