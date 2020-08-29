@@ -23,4 +23,25 @@ router.post("/author", async (req, res) => {
   }
 });
 
+// Remove Author
+router.delete("/author", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const deletedAuthor = await prisma.author.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    res.json(deletedAuthor);
+  } catch (e) {
+    if (e.code === "P2016") {
+      res.status(404).json("Author does not exist");
+    } else {
+      res.status(500).json(e);
+    }
+  }
+});
+
 module.exports = router;
