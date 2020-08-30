@@ -53,6 +53,9 @@ router.get("/author/:id", async (req, res) => {
       where: {
         id: Number(id),
       },
+      include: {
+        books: true,
+      },
     });
 
     if (!author) {
