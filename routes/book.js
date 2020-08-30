@@ -59,4 +59,29 @@ router.delete("/book", async (req, res) => {
   }
 });
 
+// Find Book by ID
+router.get("/Book/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const book = await prisma.book.findOne({
+      where: {
+        id: Number(id),
+      },
+      select: {
+        title: true,
+        author: true,
+      },
+    });
+
+    if (!book) {
+      return res.status(404).json("Book does not exist");
+    }
+
+    return res.json(book);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+});
+
 module.exports = router;
