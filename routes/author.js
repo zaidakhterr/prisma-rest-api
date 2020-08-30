@@ -13,12 +13,12 @@ router.post("/author", async (req, res) => {
       },
     });
 
-    res.json(newAuthor);
+    return res.json(newAuthor);
   } catch (e) {
     if (e.code === "P2002" && e.meta.target.includes("email")) {
-      res.status(400).json("Duplicate Email");
+      return res.status(400).json("Duplicate Email");
     } else {
-      res.status(500).json(e);
+      return res.status(500).json(e);
     }
   }
 });
@@ -34,12 +34,12 @@ router.delete("/author", async (req, res) => {
       },
     });
 
-    res.json(deletedAuthor);
+    return res.json(deletedAuthor);
   } catch (e) {
     if (e.code === "P2016") {
-      res.status(404).json("Author does not exist");
+      return res.status(404).json("Author does not exist");
     } else {
-      res.status(500).json(e);
+      return res.status(500).json(e);
     }
   }
 });
@@ -56,12 +56,12 @@ router.get("/author/:id", async (req, res) => {
     });
 
     if (!author) {
-      res.status(404).json("Author does not exist");
+      return res.status(404).json("Author does not exist");
     }
 
-    res.json(author);
+    return res.json(author);
   } catch (e) {
-    res.status(500).json(e);
+    return res.status(500).json(e);
   }
 });
 
@@ -72,9 +72,9 @@ router.get("/authors", async (req, res) => {
   try {
     const allAuthors = await prisma.author.findMany();
 
-    res.json(allAuthors);
+    return res.json(allAuthors);
   } catch (e) {
-    res.status(500).json(e);
+    return res.status(500).json(e);
   }
 });
 
