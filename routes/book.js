@@ -84,4 +84,15 @@ router.get("/Book/:id", async (req, res) => {
   }
 });
 
+// Get All Books
+router.get("/books", async (req, res) => {
+  try {
+    const allBooks = await prisma.book.findMany();
+
+    return res.json(allBooks);
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+});
+
 module.exports = router;
