@@ -38,4 +38,25 @@ router.post("/book", async (req, res) => {
   }
 });
 
+// Remove Book
+router.delete("/book", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const deletedBook = await prisma.book.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return res.json(deletedBook);
+  } catch (e) {
+    if (e.code === "P2016") {
+      return res.status(404).json("Book does not exist");
+    } else {
+      return res.status(500).json(e);
+    }
+  }
+});
+
 module.exports = router;
